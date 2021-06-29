@@ -2,61 +2,61 @@ import { useState, useEffect } from "react";
 import { Grocery, useGroceryList } from "./useGroceryList";
 import { Table } from "semantic-ui-react";
 import { CartType } from "../../App";
+import { containsStr, toUSD } from "../../utilities/helpers";
 
 type GroceryListProps = {
   searchKey: string;
+  cart: CartType;
+  selectedCategory: string;
+  setCart: (cart: CartType) => void;
+  setCategories: (categories: string[]) => void;
 };
 
-const containsStr = (str1: string, str2: string) => {
-  if (str1 === "") return false;
-  if (str2 === "") return true;
-  for (let i = 0; i + str2.length <= str1.length; i++) {
-    let str2Pos = 0;
-    while (str2Pos < str2.length) {
-      if (str1[i + str2Pos] !== str2[str2Pos]) break;
-      str2Pos++;
-    }
-
-    if (str2Pos === str2.length) return true;
-  }
-  return false;
-};
-
-export const GroceryList = ({ searchKey }: GroceryListProps) => {
+export const GroceryList = (props: GroceryListProps) => {
+  const { searchKey, cart, setCart, setCategories, selectedCategory } = props;
   const { groceries } = useGroceryList();
   const [filteredGroceries, setFilteredGroceries] =
     useState<Grocery[]>(groceries);
-  const setCart = () => {};
-  const cart: CartType = {};
 
   const addToCart = (grocery: Grocery) => {
-    cart[grocery.id] = {
+    const tempCart = {...cart};
+    tempCart[grocery.id] = {
       ...grocery,
-      quantity: cart[grocery.id] ? 0 : cart[grocery.id].quantity + 1,
+      qty: tempCart[grocery.id] ? tempCart[grocery.id].qty + 1 : 1,
     };
+    setCart(tempCart);
   };
 
-  useEffect(
-    () =>
+  
+
+  useEffect(()=> {
+    const categories: {[key: string]: 1} = {};
+    groceries.forEach(grocery => {
+      categories[grocery.type] = 1;
+    })
+    setCategories(Object.keys(categories));
+  },[groceries])
+
+  useEffect(() => {
       setFilteredGroceries(
-        searchKey.length < 1
-          ? groceries
-          : groceries.filter((grocery) => {
-              const name = containsStr(grocery.name, searchKey);
-              const type = containsStr(grocery.type, searchKey);
-              const price = containsStr(grocery.price.toString(), searchKey);
-              return name || type || price;
-            })
-      ),
-    [searchKey, groceries]
+        groceries.filter((grocery) => {
+          const categoryFilter = selectedCategory ? grocery.type === selectedCategory : true;
+          const name = containsStr(grocery.name, searchKey);
+          const type = containsStr(grocery.type, searchKey);
+          const price = containsStr(`${grocery.price}`, searchKey);
+          return categoryFilter && (name || type || price);
+        })
+      )
+    },
+    [searchKey, selectedCategory, groceries]
   );
 
   const tableBody = filteredGroceries ? (
     filteredGroceries.map((grocery) => (
-      <Table.Row key={`${grocery.name}-${grocery.id}`}>
+      <Table.Row key={`${grocery.name}-${grocery.id}`} onClick={() => {addToCart(grocery)}}>
         <Table.Cell>{grocery.name}</Table.Cell>
         <Table.Cell>{grocery.type}</Table.Cell>
-        <Table.Cell>{grocery.price}</Table.Cell>
+        <Table.Cell>{toUSD(grocery.price)}</Table.Cell>
       </Table.Row>
     ))
   ) : (
