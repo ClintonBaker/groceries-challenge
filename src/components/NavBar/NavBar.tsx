@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import CSS from 'csstype';
 import { Menu, Input, Button, Icon, Dropdown, DropdownProps } from "semantic-ui-react";
 
 type NavProps = {
+  showCart: boolean;
+  cartLen: number;
   toggleCart: () => void;
   categories: string[];
   selectedCategory: string;
@@ -9,20 +12,32 @@ type NavProps = {
   setSelectedCategory: (category: string) => void;
 };
 
-export const NavBar = (props: NavProps) => {
-  const { onChange, toggleCart, categories, selectedCategory, setSelectedCategory } = props;
-  const [options, setOptions] = useState<{key: string, text: string, value: string}[]>();
+const cartCounter: CSS.Properties = {
+  background: 'red',
+  borderRadius: '20px',
+  width: '15px',
+  position: 'absolute',
+  bottom: '5px',
+  left: '32px',
+  fontSize: '12px',
+  color: 'white',
+  zIndex: 1
+}
 
-  useEffect(()=>{
-    setOptions(categories.map(category => ({key: category,text: category,value: category})));
+export const NavBar = (props: NavProps) => {
+  const { onChange, toggleCart, categories, selectedCategory, setSelectedCategory, cartLen, showCart } = props;
+  const [options, setOptions] = useState<{ key: string, text: string, value: string }[]>();
+
+  useEffect(() => {
+    setOptions(categories.map(category => ({ key: category, text: category, value: category })));
   }, [categories])
 
-  const handleDropdownChange = (e:React.SyntheticEvent<HTMLElement>, {value}: DropdownProps) => {
+  const handleDropdownChange = (e: React.SyntheticEvent<HTMLElement>, { value }: DropdownProps) => {
     setSelectedCategory(`${value}`);
   }
 
-  return (
-    <Menu style={{ marginBottom: 0 }}>
+  const homeLeftNav = (
+    <>
       <Menu.Item>
         <Input
           onChange={onChange}
@@ -32,11 +47,29 @@ export const NavBar = (props: NavProps) => {
         />
       </Menu.Item>
       <Menu.Item>
-        <Dropdown placeholder="Category" options={options} clearable selection value={selectedCategory} onChange={handleDropdownChange}/>
+        <Dropdown placeholder="Category" options={options} clearable selection value={selectedCategory} onChange={handleDropdownChange} />
       </Menu.Item>
+    </>
+  )
+
+  const cartLeftNav = (
+    <Menu.Item>
+      <Button onClick={toggleCart}>
+        <Button.Content>
+          <Icon name="arrow left" />
+        </Button.Content>
+      </Button>
+    </Menu.Item>
+  )
+
+  return (
+    <Menu inverted style={{ marginBottom: 0 }}>
+      {showCart ? cartLeftNav : homeLeftNav}
+
       <Menu.Item position="right">
-        <Button onClick={toggleCart}>
+        <Button style={{ margin: '8px 0' }} onClick={toggleCart}>
           <Button.Content>
+            {cartLen ? <span style={cartCounter}>{cartLen}</span> : <></>}
             <Icon name="shop" />
           </Button.Content>
         </Button>

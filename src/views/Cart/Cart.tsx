@@ -4,11 +4,10 @@ import { toUSD } from '../../utilities/helpers';
 
 type CartProps = {
   cart: CartType;
-  setCart: (cart: CartType) => void;
 };
 
 export const Cart = (props: CartProps) => {
-  const {cart, setCart } = props;
+  const { cart } = props;
 
   const tableBody = Object.keys(cart).length > 0 ? Object.keys(cart).map(key => {
     const item = cart[key];
@@ -17,13 +16,13 @@ export const Cart = (props: CartProps) => {
         <Table.Cell>{item.name}</Table.Cell>
         <Table.Cell>{toUSD(item.price)}</Table.Cell>
         <Table.Cell>{item.qty}</Table.Cell>
-        <Table.Cell>{toUSD(item.qty*item.price)}</Table.Cell>
+        <Table.Cell>{toUSD(item.qty * item.price)}</Table.Cell>
       </Table.Row>
     )
   }) : (<Table.Row><Table.Cell>No items in cart</Table.Cell></Table.Row>)
 
   return (
-    <Table style={{marginTop: 0}}>
+    <Table inverted style={{ marginTop: 0 }}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Name</Table.HeaderCell>
