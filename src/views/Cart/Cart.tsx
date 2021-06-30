@@ -28,7 +28,7 @@ export const Cart = (props: CartProps) => {
   }) : (<Table.Row><Table.Cell colSpan='4'>No items in cart</Table.Cell></Table.Row>)
 
   return (
-    <Table inverted textAlign="center" style={{ marginTop: 0 }}>
+    <Table inverted textAlign="center" columns={4} style={{ marginTop: 0 }}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Name</Table.HeaderCell>
@@ -42,7 +42,7 @@ export const Cart = (props: CartProps) => {
       </Table.Body>
       <Table.Footer>
         <Table.Row>
-          {cartTotal ? <><Table.HeaderCell></Table.HeaderCell><Table.HeaderCell></Table.HeaderCell><Table.HeaderCell><span style={{ float: 'right', paddingRight: 0 }}>Total:</span></Table.HeaderCell><Table.HeaderCell>{toUSD(cartTotal)}</Table.HeaderCell></> : <></>}
+          {cartTotal ? <><Table.HeaderCell></Table.HeaderCell><Table.HeaderCell></Table.HeaderCell><Table.HeaderCell><span style={{ float: 'right', marginRight: -70 }}>Total:</span></Table.HeaderCell><Table.HeaderCell>{toUSD(cartTotal)}</Table.HeaderCell></> : <></>}
         </Table.Row>
       </Table.Footer>
     </Table>
