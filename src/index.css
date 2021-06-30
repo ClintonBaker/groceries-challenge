@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-transform: capitalize
 }
 
 code {
@@ -21,7 +22,7 @@ tbody tr:nth-child(odd){
 }
 
 @media (max-width:1200px) {
-  .header.item.MenuHeader {
+  .MenuHeader {
     display: none !important;
   }
 }

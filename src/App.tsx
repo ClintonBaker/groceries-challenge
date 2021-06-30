@@ -7,7 +7,7 @@ import { NavBar } from "./components";
 
 export type CartType = {
   [id: string]: {
-    id: string;
+    id: number;
     name: string;
     type: string;
     price: number;
@@ -22,7 +22,7 @@ function App() {
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   return (
-    <Container style={{ margin: 0, paddingTop: 50, background: '#222', height: '100%', width: '100%' }}>
+    <Container style={{ margin: 0, paddingTop: 50, paddingBottom: 80, background: '#222', height: '100%', width: '100%' }}>
       <Container style={{ margin: '0 50px 0 50px', boxShadow: '#111 0 0 6px' }}>
         <NavBar
           showCart={showCart}
@@ -37,22 +37,23 @@ function App() {
           selectedCategory={selectedCategory}
           setSelectedCategory={(category) => { setSelectedCategory(category) }}
         />
-        <Transition animation={"slide right"} duration={{ hide: 0, show: 300 }} visible={!showCart}>
-          <div>
-            <GroceryList searchKey={searchKey} selectedCategory={selectedCategory} cart={cart} setCart={(cart: CartType) => {
-              setCart(cart);
-            }}
-              setCategories={(categories) => {
-                setCategories(categories)
-              }} />
-          </div>
-        </Transition>
-        <Transition animation={"slide left"} duration={{ hide: 0, show: 300 }} visible={showCart}>
-          <div>
-            <Cart cart={cart} />
-          </div>
-        </Transition>
-
+        <Container style={{ maxHeight: '80vh', overflow: 'scroll' }}>
+          <Transition animation="slide right" duration={{ hide: 0, show: 300 }} visible={!showCart}>
+            <div>
+              <GroceryList searchKey={searchKey} selectedCategory={selectedCategory} cart={cart} setCart={(cart: CartType) => {
+                setCart(cart);
+              }}
+                setCategories={(categories) => {
+                  setCategories(categories)
+                }} />
+            </div>
+          </Transition>
+          <Transition animation="slide left" duration={{ hide: 0, show: 300 }} visible={showCart}>
+            <div>
+              <Cart cart={cart} />
+            </div>
+          </Transition>
+        </Container>
       </Container>
     </Container>
   );

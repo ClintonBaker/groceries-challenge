@@ -26,7 +26,7 @@ const cartCounter: CSS.Properties = {
 
 const menuHeader: CSS.Properties = {
   position: 'absolute',
-  left: '45%',
+  left: '50%',
   top: '58px',
   fontSize: '22px'
 }

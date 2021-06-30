@@ -82,7 +82,7 @@ export const GroceryList = (props: GroceryListProps) => {
   );
 
   return (
-    <Table inverted textAlign="center">
+    <Table inverted textAlign="center" columns="4">
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Name</Table.HeaderCell>
