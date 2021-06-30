@@ -12,7 +12,7 @@ type NavProps = {
   setSelectedCategory: (category: string) => void;
 };
 
-const cartCounter: CSS.Properties = {
+const CartCounterStyles: CSS.Properties = {
   background: '#50C878',
   borderRadius: '20px',
   width: '15px',
@@ -24,7 +24,7 @@ const cartCounter: CSS.Properties = {
   zIndex: 1
 }
 
-const menuHeader: CSS.Properties = {
+const MenuHeader: CSS.Properties = {
   position: 'absolute',
   left: '50%',
   top: '58px',
@@ -72,13 +72,13 @@ export const NavBar = (props: NavProps) => {
   return (
     <Menu inverted borderless style={{ marginBottom: 0 }}>
       {showCart ? cartLeftNav : homeLeftNav}
-      <Menu.Item className="MenuHeader" style={menuHeader} header position="right">
+      <Menu.Item className="MenuHeader" style={MenuHeader} header position="right">
         {showCart ? 'Cart' : 'Shop'}
       </Menu.Item>
       <Menu.Item position="right">
         <Button style={{ margin: '8px 0' }} onClick={toggleCart}>
           <Button.Content>
-            {cartLen ? <span style={cartCounter}>{cartLen}</span> : <></>}
+            {cartLen ? <span style={CartCounterStyles}>{cartLen}</span> : <></>}
             <Icon name="shop" />
           </Button.Content>
         </Button>

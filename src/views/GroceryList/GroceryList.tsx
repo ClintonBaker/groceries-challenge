@@ -44,7 +44,8 @@ export const GroceryList = (props: GroceryListProps) => {
   useEffect(() => {
     const categories: { [key: string]: 1 } = {};
     groceries.forEach(grocery => {
-      categories[grocery.type] = 1;
+      const type = grocery.type;
+      categories[type[0].toUpperCase() + type.slice(1)] = 1;
     })
     setCategories(Object.keys(categories));
   }, [groceries])
@@ -52,7 +53,7 @@ export const GroceryList = (props: GroceryListProps) => {
   useEffect(() => {
     setFilteredGroceries(
       groceries.filter((grocery) => {
-        const categoryFilter = selectedCategory ? grocery.type === selectedCategory : true;
+        const categoryFilter = selectedCategory ? grocery.type.toUpperCase() === selectedCategory.toUpperCase() : true;
         const name = containsStr(grocery.name, searchKey);
         const type = containsStr(grocery.type, searchKey);
         const price = containsStr(`${grocery.price}`, searchKey);
