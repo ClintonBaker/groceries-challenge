@@ -54,7 +54,7 @@ export const NavBar = (props: NavProps) => {
         />
       </Menu.Item>
       <Menu.Item>
-        <Dropdown placeholder="Category" options={options} clearable value={selectedCategory} onChange={handleDropdownChange} />
+        <Dropdown placeholder="Category" options={options} clearable selection value={selectedCategory} onChange={handleDropdownChange} />
       </Menu.Item>
     </>
   )
