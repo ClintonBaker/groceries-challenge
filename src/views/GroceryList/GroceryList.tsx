@@ -41,8 +41,6 @@ export const GroceryList = (props: GroceryListProps) => {
     setCart(tempCart);
   }
 
-
-
   useEffect(() => {
     const categories: { [key: string]: 1 } = {};
     groceries.forEach(grocery => {
@@ -71,7 +69,10 @@ export const GroceryList = (props: GroceryListProps) => {
         <Table.Cell>{grocery.name}</Table.Cell>
         <Table.Cell>{grocery.type}</Table.Cell>
         <Table.Cell>{toUSD(grocery.price)}</Table.Cell>
-        <Table.Cell><Button icon="add" color="green" size="mini" onClick={() => { addToCart(grocery) }} /><Button icon="minus" color="red" size="mini" onClick={() => { removeFromCart(grocery) }} /></Table.Cell>
+        <Table.Cell>
+          <Button icon="add" color="green" size="mini" onClick={() => { addToCart(grocery) }} />
+          <Button icon="minus" color="red" size="mini" onClick={() => { removeFromCart(grocery) }} />
+        </Table.Cell>
       </Table.Row>
     ))
   ) : (
@@ -81,7 +82,7 @@ export const GroceryList = (props: GroceryListProps) => {
   );
 
   return (
-    <Table inverted style={{ marginTop: 0 }}>
+    <Table inverted textAlign="center">
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Name</Table.HeaderCell>

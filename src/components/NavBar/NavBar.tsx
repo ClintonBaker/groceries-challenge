@@ -13,7 +13,7 @@ type NavProps = {
 };
 
 const cartCounter: CSS.Properties = {
-  background: 'red',
+  background: '#50C878',
   borderRadius: '20px',
   width: '15px',
   position: 'absolute',
@@ -22,6 +22,13 @@ const cartCounter: CSS.Properties = {
   fontSize: '12px',
   color: 'white',
   zIndex: 1
+}
+
+const menuHeader: CSS.Properties = {
+  position: 'absolute',
+  left: '45%',
+  top: '58px',
+  fontSize: '22px'
 }
 
 export const NavBar = (props: NavProps) => {
@@ -47,7 +54,7 @@ export const NavBar = (props: NavProps) => {
         />
       </Menu.Item>
       <Menu.Item>
-        <Dropdown placeholder="Category" options={options} clearable selection value={selectedCategory} onChange={handleDropdownChange} />
+        <Dropdown placeholder="Category" options={options} clearable value={selectedCategory} onChange={handleDropdownChange} />
       </Menu.Item>
     </>
   )
@@ -63,9 +70,11 @@ export const NavBar = (props: NavProps) => {
   )
 
   return (
-    <Menu inverted style={{ marginBottom: 0 }}>
+    <Menu inverted borderless style={{ marginBottom: 0 }}>
       {showCart ? cartLeftNav : homeLeftNav}
-
+      <Menu.Item className="MenuHeader" style={menuHeader} header position="right">
+        {showCart ? 'Cart' : 'Shop'}
+      </Menu.Item>
       <Menu.Item position="right">
         <Button style={{ margin: '8px 0' }} onClick={toggleCart}>
           <Button.Content>

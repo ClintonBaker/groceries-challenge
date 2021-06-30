@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Table } from 'semantic-ui-react';
 import { CartType } from "../../App";
 import { toUSD } from '../../utilities/helpers';
@@ -7,7 +8,12 @@ type CartProps = {
 };
 
 export const Cart = (props: CartProps) => {
+  const [cartTotal, setCartTotal] = useState<number>()
   const { cart } = props;
+
+  useEffect(() => {
+    setCartTotal(Object.keys(cart).reduce((total, key) => (cart[key].price * cart[key].qty) + total, 0));
+  }, [cart])
 
   const tableBody = Object.keys(cart).length > 0 ? Object.keys(cart).map(key => {
     const item = cart[key];
@@ -19,10 +25,10 @@ export const Cart = (props: CartProps) => {
         <Table.Cell>{toUSD(item.qty * item.price)}</Table.Cell>
       </Table.Row>
     )
-  }) : (<Table.Row><Table.Cell>No items in cart</Table.Cell></Table.Row>)
+  }) : (<Table.Row><Table.Cell colSpan='4'>No items in cart</Table.Cell></Table.Row>)
 
   return (
-    <Table inverted style={{ marginTop: 0 }}>
+    <Table inverted textAlign="center" style={{ marginTop: 0 }}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Name</Table.HeaderCell>
@@ -34,6 +40,11 @@ export const Cart = (props: CartProps) => {
       <Table.Body>
         {tableBody}
       </Table.Body>
+      <Table.Footer>
+        <Table.Row>
+          {cartTotal ? <><Table.HeaderCell></Table.HeaderCell><Table.HeaderCell></Table.HeaderCell><Table.HeaderCell><span style={{ float: 'right', paddingRight: 0 }}>Total:</span></Table.HeaderCell><Table.HeaderCell>{toUSD(cartTotal)}</Table.HeaderCell></> : <></>}
+        </Table.Row>
+      </Table.Footer>
     </Table>
   );
 };

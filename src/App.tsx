@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container, Transition } from "semantic-ui-react";
-import "./App.css";
 
 import { GroceryList, Cart } from "./views";
 
@@ -18,13 +17,13 @@ export type CartType = {
 
 function App() {
   const [showCart, setShowCart] = useState<boolean>(false);
-  const [searchKey, setSearchKey] = useState<string>("");
+  const [searchKey, setSearchKey] = useState<string>('');
   const [cart, setCart] = useState<CartType>({});
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   return (
-    <Container style={{ margin: 0, background: '#222', height: '100%', width: '100%' }}>
-      <Container style={{ margin: '0 50px 0 50px', paddingTop: 50 }}>
+    <Container style={{ margin: 0, paddingTop: 50, background: '#222', height: '100%', width: '100%' }}>
+      <Container style={{ margin: '0 50px 0 50px', boxShadow: '#111 0 0 6px' }}>
         <NavBar
           showCart={showCart}
           cartLen={Object.keys(cart).reduce((a, b) => a + cart[b].qty, 0)}

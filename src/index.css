@@ -15,3 +15,13 @@ code {
 #root{
   height: 100%;
 }
+
+tbody tr:nth-child(odd){
+  background: #3a3a3a;
+}
+
+@media (max-width:1200px) {
+  .header.item.MenuHeader {
+    display: none !important;
+  }
+}
