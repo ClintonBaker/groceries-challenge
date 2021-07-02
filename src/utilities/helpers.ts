@@ -5,6 +5,8 @@ export const toUSD = (num: number) => {
 export const containsStr = (str1: string, str2: string) => {
   if (str1 === "") return false;
   if (str2 === "") return true;
+  str1 = str1.toUpperCase();
+  str2 = str2.toUpperCase();
   for (let i = 0; i + str2.length <= str1.length; i++) {
     let str2Pos = 0;
     while (str2Pos < str2.length) {
